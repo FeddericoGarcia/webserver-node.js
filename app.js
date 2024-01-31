@@ -1,17 +1,37 @@
 const express = require('express');
+const hbs = require('hbs');
+
 const app = express();
 const port = process.env.PORT || 8080;
 
+app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
+
+app.use(express.static('templated-roadtrip'));
+
 app.get('/', (req, res) => {
-
-    res.send('Hello World!')
-
+    res.render('home', {
+        nombre: 'Federico Garcia',
+        titulo: "Curso de NODE.js"
+    });
+})
+app.get('/generic', (req, res) => {
+    res.render('generic', {
+        nombre: 'Federico Garcia',
+        titulo: "Curso de NODE.js"
+    });
+})
+app.get('/elements', (req, res) => {
+    res.render('elements', {
+        nombre: 'Federico Garcia',
+        titulo: "Curso de NODE.js"
+    });
 })
 
+
+
 app.get('*', (req, res) => {
-
-    res.send(`<h2> 404 | PAGE NOT FOUND </h2>`)
-
+    res.sendFile(__dirname + `/public/404.html`)
 })
 
 
